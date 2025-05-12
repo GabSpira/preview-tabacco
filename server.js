@@ -84,7 +84,14 @@ app.get('/callback', async (req, res) => {
     res.render('index', { success: true });
 
   } catch (error) {
-    console.error('Errore nel pre-save:', error);
+    // Se è un errore HTTP da Spotify
+    if (error.response) {
+      console.error('Status:', error.response.status);
+      console.error('Data:', error.response.data);
+    } else {
+      console.error('Errore non HTTP:', error.message);
+    }
+    // Risposta all’utente
     res.send('<h2>❌ Si è verificato un errore. Riprova più tardi.</h2>');
   }
 });
