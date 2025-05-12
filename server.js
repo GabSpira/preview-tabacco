@@ -90,8 +90,14 @@ app.get('/callback', async (req, res) => {
     res.render('index', { success: true });
 
   } catch (error) {
-    console.error('Errore nel pre-save:', error.response?.data || error.message);
-    res.send('<h2>❌ Si è verificato un errore. Riprova più tardi.</h2>');
+    if (error.response) {
+      console.error('❌ Spotify API errore status:', error.response.status);
+      console.error('❌ Spotify API errore body:', JSON.stringify(error.response.data));
+    } else {
+      console.error('❌ Errore non-HTTP:', error.message);
+    }
+    return res.send('<h2>❌ Si è verificato un errore. Riprova più tardi.</h2>');
+  
   }
 });
 
