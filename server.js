@@ -84,7 +84,7 @@ app.get('/callback', async (req, res) => {
     };
     // Chiave univoca per ogni record
     const key = `presaves/${user.id}-${Date.now()}.json`;
-    await put(key, JSON.stringify(record), { access: 'private' });
+    await put(key, JSON.stringify(record), { access: 'public' });
 
     // Render della pagina con preview
     res.render('index', { success: true });
